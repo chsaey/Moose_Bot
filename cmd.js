@@ -5,10 +5,10 @@ const mysql = require('mysql');
 //const { MessageAttachment } = require('discord.js');
 
 var connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
+  host: '',
+  user: '',
   password: settings.db_pw,
-  database: 'games'
+  database: ''
 });
 
 connection.connect();
@@ -82,6 +82,35 @@ module.exports = {
       }
     });
   },
+
+  dictionary:(message) => {
+    let input = message.content.replace(new RegExp('.*' + "!dictionary "), '');
+    const url = `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${input}?key=${settings.webster}`;
+    try {
+         axios.get(url)
+           .then((response) => {
+             message.reply(JSON.stringify(response.data[0]["shortdef"][0]));
+           }).catch((error) => message.reply("Hmmm... I'm not quite sure."));
+ 
+   } catch (error) {
+     console.log("Couldn't find a response!");
+   } 
+   },
+
+   joke:(message) => {
+    const url = `https://official-joke-api.appspot.com/jokes/random`;
+    try {
+         axios.get(url)
+           .then((response) => {
+             message.reply(JSON.stringify(response.data.setup) + "..... " +JSON.stringify(response.data.punchline));
+           }).catch((error) => message.reply("Hmmm... I'm not quite sure."));
+ 
+   } catch (error) {
+     console.log("Couldn't find a response!");
+   } 
+   }, 
+
+
 }//end
 
 function createApiParams(baseUrl, input, output = 'string') {

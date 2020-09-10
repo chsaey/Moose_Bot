@@ -33,14 +33,26 @@ client.on("message", message => {
 
     //Add game
     case "!addgame":
-      console.log(message)
+  
       cmd.addgame(message);
       break;
 
     case "!listgames":
-      console.log(message)
+
       cmd.listgames(message);
       break;
+
+    case "!dictionary":
+      cmd.dictionary(message);
+      break;
+
+    case "!dictionary":
+      cmd.dictionary(message);
+      break;
+
+    case "!joke":  
+      cmd.joke(message);
+      break;  
 
     default:
       break;
